@@ -34,9 +34,17 @@
             gap:10px;
         }
 
-        .card
-        
-        .zone{
+        .card{
+            width:150px;
+            height:50px;
+            border:2px solid white;
+            border-radius:10px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#333;
+        }
+           .zone{
     width:160px;
     height:80px;
     border:3px solid yellow;
@@ -83,16 +91,7 @@
     margin-top:20px;
 }
 
-        {
-            width:150px;
-            height:50px;
-            border:2px solid white;
-            border-radius:10px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            background:#333;
-        }
+
     </style>
 </head>
 <body>
@@ -111,7 +110,14 @@
     <button onclick="drawCard()">
         ドロー
     </button>
+<h2>サイド</h2>
+<div id="prize"></div>
 
+<h2>バトル場</h2>
+<div id="active" class="zone"></div>
+
+<h2>ベンチ</h2>
+<div id="bench"></div>
     <div id="hand"></div>
 
     <script>
@@ -151,6 +157,10 @@
 
         let deck = [];
         let hand = [];
+        let prize = [];
+        let discard = [];
+        let active = null;
+        let bench = [];
 
         function updateDisplay(){
 
@@ -197,29 +207,38 @@
 
         function shuffleDeck(){
 
-            deck = [...originalDeck];
-            hand = [];
+    deck = [...originalDeck];
+    hand = [];
+    prize = [];
+    discard = [];
+    active = null;
+    bench = [];
 
-            shuffle(deck);
+    shuffle(deck);
 
-            for(let i=0;i<7;i++){
-                drawCard();
-            }
+    for(let i=0;i<6;i++){
+        prize.push(deck.pop());
+    }
 
-            updateDisplay();
-        }
+    for(let i=0;i<7;i++){
+        drawCard();
+    }
 
-        function drawCard(){
+    updateDisplay();
 
-            if(deck.length===0)
-                return;
+            document.getElementById("prize").innerHTML =
+    prize.map(() =>
+        '<div class="prizecard"></div>'
+    ).join('');
 
-            hand.push(
-                deck.pop()
-            );
+document.getElementById("active").innerHTML =
+    active ?? "";
 
-            updateDisplay();
-        }
+document.getElementById("bench").innerHTML =
+    bench.map(card =>
+        `<div class="benchslot">${card}</div>`
+    ).join('');
+}
 
         shuffleDeck();
 
