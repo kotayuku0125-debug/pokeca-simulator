@@ -223,7 +223,17 @@
     for(let i=0;i<7;i++){
         drawCard();
     }
+function drawCard(){
 
+    if(deck.length===0)
+        return;
+
+    hand.push(
+        deck.pop()
+    );
+
+    updateDisplay();
+}
     updateDisplay();
 
             document.getElementById("prize").innerHTML =
